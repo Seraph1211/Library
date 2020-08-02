@@ -2,6 +2,7 @@ package guohao.dao;
 
 import guohao.bean.Book;
 import guohao.utils.DbConUtil;
+import org.omg.PortableServer.LIFESPAN_POLICY_ID;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -22,8 +23,8 @@ public class BookDao {
             return false;
         }
 
-        String sql = "insert into book(book_name, author, press, borrowed_date, returned_date, is_borrowed, owner_id) "
-                + "values(?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into book(book_name, author, press, is_borrowed, owner_id, introduction) "
+                + "values(?, ?, ?, ?, ?, ?)";
 
         PreparedStatement pstmt = null;
         int i = 0;
@@ -32,10 +33,9 @@ public class BookDao {
         pstmt.setString(1, book.getName());
         pstmt.setString(2, book.getAuthor());
         pstmt.setString(3, book.getPress());
-        pstmt.setDate(4, new Date(book.getBorrowedDate().getTime()));
-        pstmt.setDate(5, new Date(book.getReturnedDate().getTime()));
-        pstmt.setInt(6, book.isBorrowed() ? 1 : 0);
-        pstmt.setInt(7, book.getOwnerId());
+        pstmt.setInt(4, book.isBorrowed() ? 1 : 0);
+        pstmt.setInt(5, book.getOwnerId());
+        pstmt.setString(6, book.getIntroduction());
 
         i = pstmt.executeUpdate();
 
@@ -55,7 +55,7 @@ public class BookDao {
             return false;
         }
 
-        String sql = "delete from book where id=?";
+        String sql = "delete from book where book_id=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1, bookId);
 
@@ -77,7 +77,7 @@ public class BookDao {
             return false;
         }
 
-        String sql = "update book set book_name=?, author=?, press=?, borrowed_date=?, returned_date=?, is_borrowed=?, owner_id=?"
+        String sql = "update book set book_name=?, author=?, press=?, is_borrowed=?, owner_id=?, introduction=?"
                 + " where book_id=?";
 
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -85,9 +85,9 @@ public class BookDao {
         pstmt.setString(1, book.getName());
         pstmt.setString(2, book.getAuthor());
         pstmt.setString(3, book.getPress());
-        pstmt.setDate(4, new Date(book.getBorrowedDate().getTime()));
-        pstmt.setDate(5, new Date(book.getReturnedDate().getTime()));
-        pstmt.setInt(6, book.getOwnerId());
+        pstmt.setInt(4, book.isBorrowed() ? 1 : 0);
+        pstmt.setInt(5, book.getOwnerId());
+        pstmt.setString(6, book.getIntroduction());
         pstmt.setInt(7, book.getId());
 
         boolean result = pstmt.executeUpdate()>0 ? true : false;
@@ -123,8 +123,7 @@ public class BookDao {
             book.setName(rs.getString("book_name"));
             book.setAuthor(rs.getString("author"));
             book.setPress(rs.getString("press"));
-            book.setBorrowedDate(rs.getTimestamp("borrowed_date"));
-            book.setReturnedDate(rs.getTimestamp("returned_date"));
+            book.setIntroduction(rs.getString("introduction"));
             book.setBorrowed(rs.getInt("is_borrowed")==1 ? true : false);
             book.setOwnerId(rs.getInt("owner_id"));
 
@@ -134,6 +133,38 @@ public class BookDao {
         DbConUtil.close(null, pstmt, null, rs);  //释放资源
 
         return books;
+    }
+
+    public Book queryBookById(int bookId) throws SQLException{
+        if(bookId <= 0){
+            return null;
+        }
+
+
+        String sql = "select * from book where book_id=?";
+
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1, bookId);
+
+        ResultSet rs = pstmt.executeQuery();
+
+        while (rs.next()){
+            Book book = new Book();
+            book.setId(rs.getInt("book_id"));
+            book.setName(rs.getString("book_name"));
+            book.setAuthor(rs.getString("author"));
+            book.setPress(rs.getString("press"));
+            book.setIntroduction(rs.getString("introduction"));
+            book.setBorrowed(rs.getInt("is_borrowed")==1 ? true : false);
+            book.setOwnerId(rs.getInt("owner_id"));
+
+            return book;
+        }
+
+        DbConUtil.close(null, pstmt, null, rs);  //释放资源
+
+        return null;
+
     }
 
     /**
@@ -155,8 +186,7 @@ public class BookDao {
             book.setName(rs.getString("book_name"));
             book.setAuthor(rs.getString("author"));
             book.setPress(rs.getString("press"));
-            book.setBorrowedDate(rs.getTimestamp("borrowed_date"));
-            book.setReturnedDate(rs.getTimestamp("returned_date"));
+            book.setIntroduction(rs.getString("introduction"));
             book.setBorrowed(rs.getInt("is_borrowed")==1 ? true : false);
             book.setOwnerId(rs.getInt("owner_id"));
 

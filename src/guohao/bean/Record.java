@@ -1,9 +1,13 @@
 package guohao.bean;
 
+import java.sql.Timestamp;
+
 public class Record {
     private int bookId;  //书籍Id
     private int userId;  //用户Id
     private boolean isReturned;  //是否已归还
+    private Timestamp borrowedDate;  //借出日期
+    private Timestamp returnedDate;  //应归还日期
 
     public Record(){
 
@@ -37,5 +41,21 @@ public class Record {
 
     public void setReturned(boolean returned) {
         isReturned = returned;
+    }
+
+    public Timestamp getBorrowedDate() {
+        return borrowedDate;
+    }
+
+    public void setBorrowedDate(Timestamp borrowedDate) {
+        this.borrowedDate = borrowedDate;
+    }
+
+    public Timestamp getReturnedDate() {
+        return returnedDate;
+    }
+
+    public void setReturnedDate(Timestamp returnedDate) {
+        this.returnedDate = returnedDate;
     }
 }

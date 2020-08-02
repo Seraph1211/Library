@@ -1,6 +1,9 @@
 package guohao.servlet;
 
+import guohao.bean.User;
+import guohao.dao.UserDao;
 import guohao.service.UserService;
+import guohao.utils.UserInfoUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -46,7 +49,10 @@ public class LoginServlet extends HttpServlet {
 
 
             if(userName.equals("201850080441") && pwd.equals("111812")){  //管理员登录
-                response.sendRedirect("index.jsp");
+                UserInfoUtil.userType = 0;
+                UserInfoUtil.name = "201850080441";
+                UserInfoUtil.pwd = "111812";
+                response.sendRedirect("admin_home.jsp");
             } else{
 
                 UserService userService = new UserService();
@@ -61,6 +67,17 @@ public class LoginServlet extends HttpServlet {
                 System.out.println("LoginServlet: result="+result);
 
                 if(result.equals("success")){  //登录成功
+                    //保存用户信息
+                    UserInfoUtil.userType = 1;
+                    UserInfoUtil.name = userName;
+                    UserInfoUtil.pwd = pwd;
+                    try {
+                        UserInfoUtil.userId = new UserDao().queryUser(userName).get(0).getId();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+                    //跳转到Home页
                     response.sendRedirect("index.jsp");
                 }else {  //登录失败
                     request.setAttribute("msg", result);

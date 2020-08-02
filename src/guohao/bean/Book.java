@@ -8,8 +8,7 @@ public class Book {
     private String name;  //书籍名称
     private String author;  //作者
     private String press;  //出版社
-    private Timestamp borrowedDate;  //借出日期
-    private Timestamp returnedDate;  //归还日期
+    private String introduction;  //书籍简介
     private boolean isBorrowed;  //是否已借出
     private int ownerId;  //现书本持有者id
 
@@ -51,21 +50,14 @@ public class Book {
         this.press = press;
     }
 
-    public Timestamp getBorrowedDate() {
-        return borrowedDate;
+    public String getIntroduction(){
+        return this.introduction;
     }
 
-    public void setBorrowedDate(Timestamp borrowedDate) {
-        this.borrowedDate = borrowedDate;
+    public void setIntroduction(String introduction){
+        this.introduction = introduction;
     }
 
-    public Timestamp getReturnedDate() {
-        return returnedDate;
-    }
-
-    public void setReturnedDate(Timestamp returnedDate) {
-        this.returnedDate = returnedDate;
-    }
 
     public boolean isBorrowed() {
         return isBorrowed;
@@ -82,4 +74,6 @@ public class Book {
     public void setOwnerId(int ownerId) {
         this.ownerId = ownerId;
     }
+
+
 }

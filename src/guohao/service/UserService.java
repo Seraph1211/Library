@@ -1,6 +1,8 @@
 package guohao.service;
 
+import guohao.bean.Record;
 import guohao.bean.User;
+import guohao.dao.RecordDao;
 import guohao.dao.UserDao;
 
 import java.sql.SQLException;
@@ -77,6 +79,16 @@ public class UserService {
         userDao.addUser(new User(userName, pwd));
 
         return "success";
+    }
+
+    /**
+     * 根据用户id查询用户的借书记录
+     * @param userId
+     * @return
+     */
+    public List<Record> getRecords(int userId) throws SQLException {
+
+        return new RecordDao().queryRecordByUserId(userId);
     }
 
 }

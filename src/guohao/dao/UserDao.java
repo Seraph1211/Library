@@ -1,6 +1,7 @@
 package guohao.dao;
 
 import guohao.bean.Book;
+import guohao.bean.Record;
 import guohao.bean.User;
 import guohao.utils.DbConUtil;
 import org.omg.PortableServer.LIFESPAN_POLICY_ID;
@@ -150,6 +151,8 @@ public class UserDao {
     public List<Book> queryReturnedBooks(int userId){
         return null;
     }
+
+
 
 
 }

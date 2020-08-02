@@ -12,6 +12,10 @@
     <!--通过CDN引用jQuery-->
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
 
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <style>
         #div_login_form{
             margin-top: 10px;
@@ -32,30 +36,44 @@
             width: 180px;
         }
     </style>
+
+
+    <script>
+       $(function () {
+            $("#myModal").modal('show')
+       })
+    </script>
+
 </head>
 <body>
-    <h2 class="text-center text-info" id="h2_register">用户注册</h2>
-    <div class="container" id="div_login_form">
-        <form>
-            <div class="form-group">
-                <label for="account">Account</label>
-                <input type="text" class="form-control" id="account" placeholder="请输入用户名">
+
+<!--<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">开始演示模态框</button>-->
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    模态框（Modal）标题
+                </h4>
             </div>
-            <div class="form-group">
-                <label for="pwd">Password</label>
-                <input type="password" class="form-control" id="pwd" placeholder="请输入密码">
+            <div class="modal-body">
+                在这里添加一些文本
             </div>
-            <div class="form-group">
-                <label for="confirm_pwd">Confirm Password</label>
-                <input type="password" class="form-control" id="confirm_pwd" placeholder="请再次输入密码">
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" id="btn_submit_del" onclick="f(1)">
+                    提交更改
+                </button>
             </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-default" id="btn_sign_up" style="margin: 0px auto;display: table;">Sign up</button>
-            </div>
-            <div class="form-group text-center">
-                <a href="javascript:window.location.href='login.jsp'">已有账号？点此登录</a>
-            </div>
-        </form>
-    </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
 </body>
 </html>
